@@ -1,30 +1,16 @@
-.settings
-.svn
-*.apk
+# DIRS
+/build/
+/thirdparty/*
+/.gradle/
+/.idea/
+
+# add gradle build example for thirdpartys
+!/thirdparty/build.gradle
+
+# local and temp files
+*.swp
 *~
-ant.properties
+*.suo
+*.iml
 local.properties
-orig-build.xml
-android/proguard
-android/res/drawable/torch_button.xml
-android/res/drawable-hdpi/torch.png
-android/res/drawable-hdpi/torch_pressed.png
-android/src/com/
-bin/
-gen/
-PauseButton.java
-PseudoTranslator.java
-TranslatorBing.java
-TranslatorGoogle.java
-actionscript/
-release/
-android-integration/
-androidtest/
-core/
-cpp/
-csharp/
-iphone/
-jruby/
-rim/
-symbian/
-zxing.appspot.com/
+gradle.properties

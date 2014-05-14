@@ -1,0 +1,79 @@
+apply plugin: 'android'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.9.+'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:18.0.+'
+    compile project(':thirdparty:locale-api')
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19"
+
+    defaultConfig {
+        minSdkVersion 13
+        targetSdkVersion 19
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("/home/lukas/.android/debug.keystore")
+        }
+
+        release {
+            if (project.hasProperty('storeFile')) {
+                storeFile file(project.storeFile)
+            } else {
+                storeFile System.console().readLine("\n\$ Enter keystore path: ")
+            }
+
+            if (project.hasProperty('storePassword')) {
+                storePassword = project.storePassword
+            } else {
+                storePassword System.console().readLine("\n\$ Enter keystore password: ")
+            }
+
+            if (project.hasProperty('keyAlias')) {
+                keyAlias = project.keyAlias
+            } else {
+                keyAlias System.console().readLine("\n\$ Enter key alias: ")
+            }
+
+            if (project.hasProperty('keyPassword')) {
+                keyPassword = project.keyPassword
+            } else {
+                keyPassword System.console().readLine("\n\$ Enter key password: ")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            runProguard true
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+            proguardFile 'proguard-android.txt'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    lintOptions {
+        // turn off checking the given issue id's
+        disable 'InvalidPackage'
+    }
+}
+
+task wrapper(type: org.gradle.api.tasks.wrapper.Wrapper) {
+    gradleVersion = '1.10'
+}
